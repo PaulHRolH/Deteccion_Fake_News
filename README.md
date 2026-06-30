@@ -86,6 +86,75 @@ Algunas palabras con coeficientes negativos altos fueron:
 
 Estas palabras parecen estar asociadas al formato editorial de noticias reales, particularmente al estilo de agencia periodística.
 
+Versión v2: modelo sin palabras artefacto
+
+En la versión v2 se reentrenaron los modelos eliminando las palabras asociadas a fuente, formato o estructura editorial.
+
+La lista de palabras eliminadas fue:
+
+words_to_delete = [
+    "reuter", "said",
+    "monday", "tuesday", "wednesday", "thursday", "friday",
+    "via", "imag", "image", "washington"
+]
+
+Después de eliminar estas palabras, los modelos conservaron un desempeño alto, aunque menor que en la primera versión.
+
+Modelo	Accuracy
+Logistic Regression	0.9690
+SVC	0.9762
+XGBoost	0.9710
+
+El modelo con mejor accuracy en esta versión fue SVC, seguido por XGBoost y Logistic Regression.
+
+Interpretabilidad en la versión v2
+
+Después de eliminar las palabras artefacto, se volvió a analizar la importancia de las palabras usando los coeficientes de Logistic Regression.
+
+Como las etiquetas fueron definidas como:
+
+0: Noticia real
+1: Noticia falsa
+
+Entonces:
+
+Coeficientes positivos favorecen la clasificación como noticia falsa.
+Coeficientes negativos favorecen la clasificación como noticia real.
+Palabras asociadas a noticias falsas en v2
+
+Algunas palabras con coeficientes positivos altos fueron:
+
+gop
+even
+american
+hillari
+america
+mr
+like
+fact
+video
+wire
+
+Estas palabras sugieren que, después de eliminar artefactos editoriales, el modelo sigue capturando patrones de estilo, vocabulario y temas políticos frecuentes en las noticias falsas del dataset.
+
+El término gop corresponde a Grand Old Party, apodo histórico del Partido Republicano de Estados Unidos. Su asociación con noticias falsas no implica que el término sea falso por sí mismo, sino que el dataset contiene una concentración temática de noticias falsas relacionadas con política estadounidense.
+
+Palabras asociadas a noticias reales en v2
+
+Algunas palabras con coeficientes negativos altos fueron:
+
+us
+dont
+statement
+presidenti
+spokesman
+minist
+im
+told
+nov
+comment
+
+En esta versión, la palabra us aparece como una señal importante hacia noticias reales. Esto puede deberse a que durante la limpieza expresiones como U.S. se transforman en us, por lo que todavía puede existir cierto efecto del estilo editorial de noticias relacionadas con Estados Unidos.
 
 ## Autor
 
